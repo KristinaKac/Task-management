@@ -124,3 +124,7 @@ body {
     background-color: inherit;
     cursor: pointer;
 }
+.dragged {
+    position: absolute;
+    z-index: 10;
+}
