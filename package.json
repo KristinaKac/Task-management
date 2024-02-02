@@ -1,5 +1,5 @@
 {
-  "name": "eventsImageManager",
+  "name": "drag_drop",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KristinaKac/events_Image_Manager.git"
+    "url": "git+https://github.com/KristinaKac/drag_drop.git"
   },
   "author": "Kristina Kachalkova",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KristinaKac/events_Image_Manager/issues"
+    "url": "https://github.com/KristinaKac/drag_drop/issues"
   },
-  "homepage": "https://github.com/KristinaKac/events_Image_Manager#readme",
+  "homepage": "https://github.com/KristinaKac/drag_drop#readme",
   "devDependencies": {
     "@babel/cli": "^7.23.0",
     "@babel/core": "^7.23.0",
