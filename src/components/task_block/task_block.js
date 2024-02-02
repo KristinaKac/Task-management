@@ -11,10 +11,6 @@ export default class TaskBlock {
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragDrop = this.onDragDrop.bind(this);
         this.onDragDropBlock = this.onDragDropBlock.bind(this);
-        // this.onMouseDown = this.onMouseDown.bind(this);
-        // this.onMouseUp = this.onMouseUp.bind(this);
-        // this.onMouseOver = this.onMouseOver.bind(this);
-
     }
     render() {
         return `
@@ -76,7 +72,7 @@ export default class TaskBlock {
 
         const id = TaskBlock.getCurrentTask().id;
         const value = TaskBlock.getCurrentTask().querySelector('span').innerText;
-        
+
         this.tasks.push({
             id: id,
             text: value,
@@ -86,27 +82,20 @@ export default class TaskBlock {
         this.updateLocalStorage();
 
         const data = JSON.parse(localStorage.getItem(this.title));
-
+        this.updateElementsDOM(data);
+    }
+    updateElementsDOM(data) {
         data.forEach(item => {
             const taskList = this.parentEl.querySelector('.task_list');
+
             const task = this.createTask(item.id, item.text);
             taskList.appendChild(task);
-
-            // this.tasks.push({
-            //     id: task.id,
-            //     text: task.querySelector('span').innerText,
-            // });
 
             const btnRemoveTask = task.querySelector('.remove_task');
             btnRemoveTask.addEventListener('click', this.onremoveTaskClick);
 
-            const t = document.getElementById(task.id);
-            t.addEventListener('dragstart', this.onDragStart);
-            t.addEventListener('dragend', this.onDragEnd);
-            t.addEventListener('dragover', this.onDragOver);
-            t.addEventListener('dragenter', this.onDragEnter);
-            t.addEventListener('drop', this.onDragDrop);
-            t.addEventListener('dragleave', this.onDragLeave);
+            const element = document.getElementById(task.id);
+            this.addDragDropEvents(element);
         });
     }
 
@@ -129,13 +118,8 @@ export default class TaskBlock {
             const btnRemoveTask = task.querySelector('.remove_task');
             btnRemoveTask.addEventListener('click', this.onremoveTaskClick);
 
-            const t = document.getElementById(task.id);
-            t.addEventListener('dragstart', this.onDragStart);
-            t.addEventListener('dragend', this.onDragEnd);
-            t.addEventListener('dragover', this.onDragOver);
-            t.addEventListener('dragenter', this.onDragEnter);
-            t.addEventListener('drop', this.onDragDrop);
-            t.addEventListener('dragleave', this.onDragLeave);
+            const element = document.getElementById(task.id);
+            this.addDragDropEvents(element);
         });
     }
 
@@ -147,6 +131,13 @@ export default class TaskBlock {
         this.newCardBtn.addEventListener('click', this.onNewCardClick);
         this.closeAddBlock.addEventListener('click', this.onCloseAddCardClick);
         this.addTask.addEventListener('click', this.onAddCardClick);
+    }
+    addDragDropEvents(element) {
+        element.addEventListener('dragstart', this.onDragStart);
+        element.addEventListener('dragend', this.onDragEnd);
+        element.addEventListener('dragover', this.onDragOver);
+        element.addEventListener('drop', this.onDragDrop);
+        element.addEventListener('dragleave', this.onDragLeave);
     }
     onNewCardClick() {
         this.addCardBlock = this.parentEl.querySelector('.add_card');
@@ -182,16 +173,8 @@ export default class TaskBlock {
         const btnRemoveTask = task.querySelector('.remove_task');
         btnRemoveTask.addEventListener('click', this.onremoveTaskClick);
 
-        const container = document.querySelector('.container');
-        // container.addEventListener('mousedown', this.onMouseDown)
-
-        const t = document.getElementById(id);
-        t.addEventListener('dragstart', this.onDragStart);
-        t.addEventListener('dragend', this.onDragEnd);
-        t.addEventListener('dragover', this.onDragOver);
-        t.addEventListener('dragenter', this.onDragEnter);
-        t.addEventListener('drop', this.onDragDrop);
-        t.addEventListener('dragleave', this.onDragLeave);
+        const element = document.getElementById(id);
+        this.addDragDropEvents(element);
 
     }
     onDragStart(e) {
@@ -209,24 +192,7 @@ export default class TaskBlock {
 
         setTimeout(() => {
             const data = JSON.parse(localStorage.getItem(this.title));
-
-            data.forEach(item => {
-                const taskList = this.parentEl.querySelector('.task_list');
-
-                const task = this.createTask(item.id, item.text);
-                taskList.appendChild(task);
-
-                const btnRemoveTask = task.querySelector('.remove_task');
-                btnRemoveTask.addEventListener('click', this.onremoveTaskClick);
-
-                const t = document.getElementById(task.id);
-                t.addEventListener('dragstart', this.onDragStart);
-                t.addEventListener('dragend', this.onDragEnd);
-                t.addEventListener('dragover', this.onDragOver);
-                t.addEventListener('dragenter', this.onDragEnter);
-                t.addEventListener('drop', this.onDragDrop);
-                t.addEventListener('dragleave', this.onDragLeave);
-            });
+            this.updateElementsDOM(data);
         }, 100);
     }
     onDragEnd(e) {
@@ -235,17 +201,12 @@ export default class TaskBlock {
     }
     onDragOver(e) {
         e.preventDefault();
-        // console.log('over')
         if (e.target.classList.contains('task_item')) {
             e.target.style.boxShadow = '0 4px 3px grey';
         }
     }
     onDragLeave(e) {
-        // console.log('leave')
         e.target.style.boxShadow = 'none';
-    }
-    onDragEnter() {
-        // console.log('enter')
     }
     onDragDrop(e) {
         e.preventDefault();
@@ -264,30 +225,7 @@ export default class TaskBlock {
         this.updateLocalStorage();
 
         const data = JSON.parse(localStorage.getItem(this.title));
-
-        data.forEach(item => {
-            const taskList = this.parentEl.querySelector('.task_list');
-            const task = this.createTask(item.id, item.text);
-            taskList.appendChild(task);
-
-            // this.tasks.push({
-            //     id: task.id,
-            //     text: task.querySelector('span').innerText,
-            // });
-
-            const btnRemoveTask = task.querySelector('.remove_task');
-            btnRemoveTask.addEventListener('click', this.onremoveTaskClick);
-
-            const t = document.getElementById(task.id);
-            t.addEventListener('dragstart', this.onDragStart);
-            t.addEventListener('dragend', this.onDragEnd);
-            t.addEventListener('dragover', this.onDragOver);
-            t.addEventListener('dragenter', this.onDragEnter);
-            t.addEventListener('drop', this.onDragDrop);
-            t.addEventListener('dragleave', this.onDragLeave);
-        });
-
-        // this.dataFromLocalStorage();
+        this.updateElementsDOM(data);
     }
 
     onremoveTaskClick(e) {
